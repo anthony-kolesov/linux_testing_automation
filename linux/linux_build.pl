@@ -130,7 +130,6 @@ my $co_obj = Common::Checkout->new();
 #print Dumper ($gnu_obj);
 #print "Executing checkout --- $gnu_path\n";
 print STATUS "Check out::GNU Tool Chain::Started\n";
-=head
 $local_time = get_time();
 if (exists $gnu{'git_tree'}){
     tree_checkout($config->{'git_root'},$gnu{'git_tree'},$workdir,\*LOG);
@@ -147,7 +146,6 @@ if (exists $gnu{'svn_tree'}){
 if (exists $gnu{'svn_link'}){
     link_checkout($gnu{'svn_link'},$workdir,\*LOG);
 }
-=cut
 $local_time="2012-09-17:01:38:58";
 $end_time = get_time();
 $time_taken = get_time_taken($local_time,$end_time);
@@ -282,7 +280,7 @@ open (RCS,">>$workdir/arc_initramfs/etc/init.d/rcS")||die("Couldn't open file $w
 print RCS "kill 1";
 my $linux_cfg = $config->{linux_buildconfig};
 print LOG "[INFO] : Building Linux\n";
-#build_linux($linux_dir);
+build_linux($linux_dir);
 print STATUS "Loading Linux::Loading::Started\n";
 load_linux("$linux_dir/vmlinux");
 print STATUS "Loading Linux::Loading::Done\n";
@@ -488,15 +486,15 @@ sub get_add_lines_rcs{
     if ($cfg->{$test}->{copy_local} eq "yes"){
 	print RCS "mkdir -p /mnt/tests\n";
 	print RCS "if [ \$\? != 0 ]; then\n";
-	print RCS " echo \"Failed creating directory /mnt/tests\n";
+	print RCS " echo \"Failed creating directory /mnt/tests\"\n";
 	print RCS "fi\n";
 	print RCS "cp -rd /nfs/tests/$test /mnt/tests/";
         print RCS "if [ \$\? != 0 ]; then\n";
-        print RCS " echo \"Failed copying /nfs/tests -> /mnt/tests\n";
+        print RCS " echo \"Failed copying /nfs/tests -> /mnt/tests\"\n";
         print RCS "fi\n";
 	print RCS "cd /mnt/tests/$test\n";
         print RCS "if [ \$\? != 0 ]; then\n";
-        print RCS " echo \"Failed moving to /mnt/tests\n";
+        print RCS " echo \"Failed moving to /mnt/tests\"\n";
         print RCS "fi\n";
     }
     foreach my $cmd (@cmds){
@@ -666,7 +664,7 @@ sub build_linux_tests{
     print LTP "#\!/usr/bin/sh\n";
     print LTP "echo \"Checkint out source for $test\"\n";
     print LTP "if [ -d $partition/$test ]; then\n";
-    print LTP "	echo \"Deleting $partition/ltp\"\n";
+    print LTP "	echo \"Deleting $partition/$test\"\n";
     print LTP "	sudo rm -rf $partition/$test\n";
     print LTP "fi\n";
     print LTP "mkdir $partition/$test\n";
@@ -728,6 +726,8 @@ sub check_status{
         print LOG "[INFO] : Execution of $cmd : Passed\n";
     }else{
         print LOG "[ERROR] : Execution of $cmd : Failed\n";
+	my $fail = $workdir."/failed";
+	system("touch $fail");
 	mail_error("$cmd","Failed");
 	edit_lock("$vm_board{user}\@$vm_board{ip}",$vm_board{path});
 	exit;
