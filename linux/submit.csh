@@ -15,9 +15,9 @@ if ( -e run.csh ) then
 endif
 touch run.csh
 
-echo "qsub -cwd -V -P 'bnormal' -N 'linuxbuild' -o ${workarea}/output.log -e ${workarea}/error.log -l os_distribution=redhat,os_bit=64 ${workarea}/automated_scripts/linux/test.pl -config $config -configfile $configfile -testconfig $testconfig"
+echo "qsub -cwd -V -P 'bnormal' -N 'linuxbuild' -o ${workarea}/output.log -e ${workarea}/error.log -l os_distribution=redhat,os_bit=64 ${workarea}/automated_scripts/linux/linux_build.pl -config $config -configfile $configfile -testconfig $testconfig"
 echo "#\!/bin/csh" >>run.csh
-echo "qsub -cwd -V -P 'bnormal' -N 'linuxbuild' -o ${workarea}/output.log -e ${workarea}/error.log -l os_distribution=redhat,os_bit=64 ${workarea}/automated_scripts/linux/test.pl -config $config -config_file $configfile -testconfig $testconfig" >>run.csh
+echo "qsub -cwd -V -P 'bnormal' -N 'linuxbuild' -o ${workarea}/output.log -e ${workarea}/error.log -l os_distribution=redhat,os_bit=64 ${workarea}/automated_scripts/linux/linux_build.pl -config $config -config_file $configfile -testconfig $testconfig" >>run.csh
 chmod 755 run.csh
 qsub -cwd -V -P 'bnormal' -N 'linuxbuild' -o ${workarea}/output.log -e ${workarea}/error.log -l os_distribution=redhat,os_bit=64 run.csh
 while (1)

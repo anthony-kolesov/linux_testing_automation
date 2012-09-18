@@ -32,6 +32,7 @@ STDERR
 GetOptions (\%options,
 	    "config_file=s",
 	    "config=s",
+	    "testconfig=s",
 );
 our $cwd = `pwd`;
 chomp ($cwd);
@@ -68,8 +69,8 @@ if (exists $ENV{BUILD_NUMBER}){
     $workdir .= "/console";
 }
 mkpath ($workdir) if (!-d $workdir);
-$options{config_file} ||= $workdir."/automated_scripts/Linux.cfg";
-my $tests_config = $options{testconfig}||$workdir."/automated_scripts/LinuxTests.cfg";
+$options{config_file} ||= $workdir."/automated_scripts/linux/Linux.cfg";
+my $tests_config = $options{testconfig}||$workdir."/automated_scripts/linux/LinuxTests.cfg";
 my $logfile = $workdir."/build.log";
 my $status_file = $workdir."/.status";
 open (STATUS,">>$status_file")||die("Couldn't open file $status_file for writing $!\n");
