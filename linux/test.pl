@@ -32,6 +32,7 @@ STDERR
 GetOptions (\%options,
 	    "config_file=s",
 	    "config=s",
+	    "testconfig=s",
 );
 our $cwd = `pwd`;
 chomp ($cwd);
