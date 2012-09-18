@@ -2,8 +2,8 @@
 
 use strict;
 use warnings;
-#use lib './lib';
-use lib '/u/vijayb/scripts/Automation/Linux/lib/';
+use lib './lib';
+#use lib '/u/vijayb/scripts/Automation/Linux/lib/';
 use Getopt::Long;
 use Mail::Sendmail;
 use File::Path;
@@ -26,6 +26,7 @@ sub usage {
     print <<STDERR
 	    $0 --config_file=<path to the config file>
 	       --config <name of the config to run>	
+	       --testconfig <name of the testconfigfile>
 STDERR
 }
 GetOptions (\%options,
@@ -51,8 +52,6 @@ my @linux_tests = ();
 my $gnu_install = "";
 #my $busybox_tree = "";
 my $archive_dir = "";
-$options{config_file} ||= "/u/vijayb/scripts/Automation/Linux/Linux.cfg";
-my $tests_config = "/u/vijayb/scripts/Automation/Linux/LinuxTests.cfg";
 my $checkout = "";
 my $hostname = `hostname`;
 chomp ($hostname);
@@ -69,6 +68,8 @@ if (exists $ENV{BUILD_NUMBER}){
     $workdir .= "/console";
 }
 mkpath ($workdir) if (!-d $workdir);
+$options{config_file} ||= $workdir."/automated_scripts/Linux.cfg";
+my $tests_config = $options{testconfig}||$workdir."/automated_scripts/LinuxTests.cfg";
 my $logfile = $workdir."/build.log";
 my $status_file = $workdir."/.status";
 open (STATUS,">>$status_file")||die("Couldn't open file $status_file for writing $!\n");
@@ -83,6 +84,10 @@ $start_date =~ s/:.*$//;
 
 print LOG "Process started at :  $local_time\n";
 print LOG "=====================================================\n";
+print LOG "[INFO] : Using config file : $options{config_file}\n";
+print LOG "[INFO] : Using Tests Config : $tests_config\n";
+print LOG "[INFO] : Building Config : $options{config}\n";
+print LOG "[INFO] : Running from directory : $cwd\n";
 if ((scalar(keys %env)) > 0 ){
     print "[INFO] : Setting Environments for following\n";
     print "-------------------------------------------------\n";
