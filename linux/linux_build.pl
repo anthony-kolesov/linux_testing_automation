@@ -103,10 +103,6 @@ if ((scalar(keys %env)) > 0 ){
 #print "GIT ROT : $git_root\n";
 #print "Linux tree : $linux_tree\n";
 #print "gnu tree : $gnu_tree\n";
-if (exists $ENV{'WORKSPACE'}){
-    $workdir = $ENV{'WORKSPACE'};
-    print LOG "[INFO] : WORKSPACE from Jenkins : $ENV{WORKSPACE}\n";
-}
 print LOG "[HOSTNAME] : $hostname\n";
 print LOG "[WORKSPACE] : $workdir\n";
 #my $gnu_path = $workdir."/arc/";
