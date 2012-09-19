@@ -63,6 +63,7 @@ my $config = $cfg_hash->{$options{config}};
 
 init($config);
 
+$ENV{BUILD_NUMBER}=55;
 if (exists $ENV{BUILD_NUMBER}){
     $workdir .= "/$ENV{BUILD_NUMBER}";
 }else{
@@ -188,6 +189,7 @@ if (exists $gnu{configure}){
 }
 print LOG "[INFO] : Building GNU\n";
 $gnu_install = $workdir."/gnu_install/";
+mkpath($gnu_install) if (!-d $gnu_install);
 $gnu_obj->comment_versions($gnu_path);
 $gnu_obj->build_gnu($gnu_path,$gnu_install,$linux_dir);
 $end_time = get_time();

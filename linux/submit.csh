@@ -2,7 +2,8 @@
 source /u/vijayb/.cshrc
 module load grd
 echo "Config : $config"
-set workarea="${WORKSPACE}/${BUILD_NUMBER}/"
+#set workarea="${WORKSPACE}/${BUILD_NUMBER}/"
+set workarea="${WORKSPACE}/55/"
 cd "$workarea/automated_scripts/linux"
 echo "$workarea/automated_scripts/linux/"
 echo "working under "

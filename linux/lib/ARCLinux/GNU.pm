@@ -36,9 +36,6 @@ sub updateConfigure{
     print "Before for loop\n";
     foreach my $file (@files){
 	chomp ($file);
-	print "FIlE : $file\n";
-	system("pwd");
-	system ("ls -l $file");
 	my $temp = $addLine;
 	$temp =~ s/^-*|\s*-*//;
 	print "Line to search $temp\n";
@@ -117,7 +114,7 @@ sub build_gnu {
     my $cwd = `pwd`;
     chomp ($cwd);
     chdir($gnu);
-    my $cmd = "build-all.sh --linux-dir $linux --install-dir $gnu_install";
+    my $cmd = "sh build-all.sh --linux-dir $linux --install-dir $gnu_install";
     print "Executing command $cmd under\n";
     system ("$cmd 2>&1");
     if ($? == 0){
