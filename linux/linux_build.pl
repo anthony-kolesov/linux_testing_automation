@@ -658,8 +658,8 @@ sub build_linux_tests{
     print LOG "[INFO] : COpying $gnu_install to remote machine $vm\n";
     my $basename = `basename $gnu_install`;
     chomp ($basename);
-    print ("ssh -t $login 'rm -rf $partition/$basename'\n");
-    system("ssh -t $login 'rm -rf $partition/$basename'");
+#    print ("ssh -t $login 'rm -rf $partition/$basename'\n");
+#    system("ssh -t $login 'rm -rf $partition/$basename'");
     #system( "scp -rd $gnu_install ${login}:$partition");
     #my $basename = `basename $gnu_install`;
     #chomp ($basename);
