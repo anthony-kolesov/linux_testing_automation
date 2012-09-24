@@ -63,7 +63,6 @@ my $config = $cfg_hash->{$options{config}};
 
 init($config);
 
-$ENV{BUILD_NUMBER}=55;
 if (exists $ENV{BUILD_NUMBER}){
     $workdir .= "/$ENV{BUILD_NUMBER}";
 }else{
@@ -190,7 +189,7 @@ if (exists $gnu{configure}){
 print LOG "[INFO] : Building GNU\n";
 $gnu_install = $workdir."/gnu_install/";
 mkpath($gnu_install) if (!-d $gnu_install);
-$gnu_obj->comment_versions($gnu_path);
+#$gnu_obj->comment_versions($gnu_path);
 $gnu_obj->build_gnu($gnu_path,$gnu_install,$linux_dir);
 $end_time = get_time();
 $time_taken = get_time_taken($local_time,$end_time);
@@ -447,7 +446,7 @@ sub extract_initramfs{
     mkdir ("temp",0777) if (!-d "temp");
     print LOG "[CMD] : tar -xzf $tar_file -C temp/\n";
     system("tar -xzf $tar_file -C temp/ 2>&1");
-    check_status("Extraction of tar file $tar_file");
+    #check_status("Extraction of tar file $tar_file");
     my $arc_dir = `find temp/ -type d -name "arc_initramfs"`;
     chomp ($arc_dir);
     print LOG "[INFO] : Moving $arc_dir -> $workdir\n";
@@ -591,7 +590,7 @@ sub load_linux{
     print LOG "[INFO] : /usr/bin/scp $script_file $config->{vm_board}\n";
     print LOG "[COMMAND] : ssh $vm load_linux.sh\n";
     chmod(0755,"$script_file");
-    print("ssh $vm load_linux.sh\n");
+    print("scp $vm load_linux.sh\n");
     system("scp $script_file ${vm}:");
     check_status("scp $script_file -> ${vm}:");
     system("ssh $vm 'sh load_linux.sh' >>$load_log 2>&1");
