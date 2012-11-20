@@ -3,6 +3,7 @@
 for i in ${WORKSPACE}/*
 do
 	echo remove $i
-	rm -rf $i
+	chown -R akolesov $i
+	chmod -R 777 $i
 done
 
