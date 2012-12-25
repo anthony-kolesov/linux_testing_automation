@@ -861,8 +861,10 @@ sub get_time_taken{
     my $start = $_[0];
     my $end = $_[1];
     $start =~ /(.*?)-(.*?)-(.*?):(.*?):(.*?):(.*?)$/;
+    $2 -= 1;
     my $start_local = timelocal($6,$5,$4,$3,$2,$1);
     $end =~ /(.*?)-(.*?)-(.*?):(.*?):(.*?):(.*?)$/;
+    $2 -= 1;
     my $end_local = timelocal($6,$5,$4,$3,$2,$1);
     my $time = $end_local - $start_local;
 
